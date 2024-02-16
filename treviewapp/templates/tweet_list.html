@@ -1,0 +1,8 @@
+
+ <h1>Tweet Reviews</h1>
+<ul>
+   {% for tweet in tweets %}
+    <li>{{ tweet.content }} - {{ tweet.created_at }}</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'add_tweet' %}">Add Tweet</a>

@@ -1,0 +1,134 @@
+
+<!-- sentiment_analysis_app/templates/index.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1em;
+            text-align: center;
+            
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        main {
+            padding: 2em;
+        }
+
+        img {
+            max-width: 20%;
+            height: 20%;
+            display: block;
+            margin: 0 auto;
+            opacity: 90%;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 2em;
+        }
+
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-bottom: 1em;
+            padding: 1em;
+            resize: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            cursor: pointer;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #4CAF50; /* Green background color */
+            color: white; /* White text color */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sentiment Analysis</h1>
+    </header>
+
+    <main>
+        <img src="{% static 'sentimen.png' %}" alt="Sentiment Analysis Image">
+
+        <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea type="text" id="text-input" name="user_input" placeholder="Type here..." required></textarea>
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+        <!-- {% if user_input %}
+         <h1 style="color: red; align-items: center;">{{ prediction }}</h1> -->
+            <!-- <script>
+                // Display a simple alert popup
+                var variableValue = "{{ prediction }}";
+                alert(variableValue);
+            </script>
+        {% endif %} -->
+
+        {% if user_input %}
+        <!-- Display the popup message -->
+        <div id="popup" class="popup">
+            <p id="popup-message"></p>
+        </div>
+
+        <script>
+            // Display a colored popup with the variable value
+            document.addEventListener('DOMContentLoaded', function () {
+                var variableValue = "{{ prediction }}";
+                var popup = document.getElementById('popup');
+                var popupMessage = document.getElementById('popup-message');
+
+                popupMessage.textContent = variableValue;
+                popup.style.display = 'block';
+
+                // Close the popup after 3 seconds (adjust as needed)
+                setTimeout(function () {
+                    popup.style.display = 'none';
+                }, 3000);
+            });
+        </script>
+    {% endif %}
+    </main>
+  
+    <footer>
+        <p>&copy; 2024 Sentiment Analysis Project</p>
+    </footer>
+</body>
+</html>
